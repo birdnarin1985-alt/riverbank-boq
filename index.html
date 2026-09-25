@@ -232,7 +232,6 @@
         break-after: auto !important;
       }
       
-      /* จัดตำแหน่งหน้า 4 ให้อยู่กึ่งกลางสายตากระดาษ A4 บริสุทธิ์ */
       .page-sheet.merit-theme {
         display: block !important;
         border: none !important;
@@ -247,7 +246,7 @@
         box-sizing: border-box !important;
         width: 95% !important;
         max-width: 170mm !important;
-        margin: 32mm auto 0 auto !important; /* จัดบาลานซ์กึ่งกลาง A4 สมบูรณ์แบบ */
+        margin: 32mm auto 0 auto !important;
         border: 1.5pt solid #78350f !important;
         border-radius: 4pt !important;
         background: #ffffff !important;
@@ -1107,13 +1106,9 @@
     /* ================= WIDE-ANGLE ARCHITECTURAL SIDE OBLIQUE PROJECTION ================= */
     function drawPerspectiveSketch() {
       const svg = document.getElementById('sketch-canvas');
-      
-      // กางมุมมองแบบมุมกว้างด้านข้าง (Wide-Angle Oblique Side Perspective)
-      // เวกเตอร์ฉาย: แกน X (แนวยาวตลิ่ง) ทอดยาวตั้งแต่ 45px ถึง 495px (450px span)
-      // แกน Y (ความลึกขั้นบันได) เอียง 30 องศาขึ้นไปทางซ้ายบน
       const x0 = 55;
       const y0 = 190;
-      const spanLenPx = 430; // กางความยาวตลิ่งเกือบเต็มเฟรม (กว้างสะใจ)
+      const spanLenPx = 430;
       const rad = (currentAngle * Math.PI) / 180;
       const tierH = 13;
       const tierD = Math.max(10, Math.min(26, tierH / Math.tan(rad)));
@@ -1127,16 +1122,13 @@
         </defs>
       `;
 
-      // 1. HORIZON & PERSPECTIVE GUIDELINES (เส้นนำสายตาสถาปัตย์มุมกว้าง)
       els += `<line x1="20" y1="45" x2="520" y2="45" stroke="#475569" stroke-width="0.8" stroke-dasharray="6,4" opacity="0.45"/>`;
       els += `<text x="440" y="40" fill="#38bdf8" font-size="7.5" font-family="monospace">WIDE-ANGLE HORIZON</text>`;
 
-      // เส้นร่างนำสายตาเฉียงลึกขึ้น (Construction Drafting Rays)
       for (let rx = x0; rx <= x0 + spanLenPx; rx += 70) {
         els += `<line x1="${rx}" y1="${y0 + 15}" x2="${rx - 55}" y2="${y0 - 130}" stroke="#0284c7" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.25"/>`;
       }
 
-      // 2. EXPANDED WATER PLANE (ผิวน้ำมุมกว้างด้านหน้าแนวยาวตลอดตลิ่ง)
       els += `
         <polygon points="${x0 - 30},${y0 + 12} ${x0 + spanLenPx + 20},${y0 + 12} ${x0 + spanLenPx - 10},${y0 - 12} ${x0 - 55},${y0 - 12}" 
                  fill="#0284c7" fill-opacity="0.12" stroke="#0284c7" stroke-width="0.8"/>
@@ -1145,49 +1137,39 @@
         els += `<line x1="${x0 - 20}" y1="${wy}" x2="${x0 + spanLenPx}" y2="${wy}" stroke="#38bdf8" stroke-width="0.6" stroke-dasharray="14,6" opacity="0.5"/>`;
       }
 
-      // 3. SUB-BASE FOUNDATION (หินคลุกฐานราก ทอดยาวเต็มโครงการ)
-      // Front Face
       els += `<rect x="${x0}" y="${y0 - subBaseH}" width="${spanLenPx}" height="${subBaseH}" rx="1" fill="#334155" stroke="#94a3b8" stroke-width="1"/>`;
-      // Tread Top / Hatching
       els += `
         <polygon points="${x0},${y0 - subBaseH} ${x0 + spanLenPx},${y0 - subBaseH} ${x0 + spanLenPx - 18},${y0 - subBaseH - 12} ${x0 - 18},${y0 - subBaseH - 12}" 
                  fill="url(#sketchHatch)" stroke="#64748b" stroke-width="0.8"/>
       `;
 
-      // 4. STEPPED TERRACES (ระเบียงขั้นบันได 3 มิติ กว้างเต็มตา)
       for (let t = 1; t <= currentTiers; t++) {
         let xOff = -14 * t;
         let yBase = y0 - subBaseH - ((t - 1) * (tierH + 10));
         let yTop = yBase - tierH;
 
-        // Front Face ของระเบียงแต่ละชั้น (หน้ากว้างทอดยาว)
         els += `
           <rect x="${x0 + xOff}" y="${yTop}" width="${spanLenPx}" height="${tierH}" rx="1" 
                 fill="#047857" stroke="#10b981" stroke-width="1.1"/>
         `;
 
-        // Side Face ซ้ายสุด (แสดงความหนาของชั้น)
         els += `
           <polygon points="${x0 + xOff},${yTop} ${x0 + xOff},${yBase} ${x0 + xOff - 12},${yBase - 8} ${x0 + xOff - 12},${yTop - 8}" 
                    fill="#065f46" stroke="#047857" stroke-width="0.8"/>
         `;
 
-        // Tread Top (พื้นระเบียงด้านบนของชั้น)
         els += `
           <polygon points="${x0 + xOff},${yTop} ${x0 + xOff + spanLenPx},${yTop} ${x0 + xOff + spanLenPx - 14},${yTop - 10} ${x0 + xOff - 14},${yTop - 10}" 
                    fill="#10b981" fill-opacity="0.32" stroke="#34d399" stroke-width="0.9"/>
         `;
 
-        // รอยต่อกระสอบสเก็ตช์สถาปัตย์ตามแนวยาว (Stepped Bag Vertical Partitions)
         for (let bx = x0 + xOff + 22; bx < x0 + xOff + spanLenPx; bx += 24) {
           els += `<line x1="${bx}" y1="${yTop}" x2="${bx}" y2="${yBase}" stroke="#065f46" stroke-width="0.7"/>`;
           els += `<line x1="${bx}" y1="${yTop}" x2="${bx - 14}" y2="${yTop - 10}" stroke="#065f46" stroke-width="0.5" stroke-dasharray="3,2"/>`;
         }
 
-        // เส้นร่างดินสอเลยขอบมุม (Architectural Overshoots)
         els += `<line x1="${x0 + xOff - 8}" y1="${yTop}" x2="${x0 + xOff + spanLenPx + 15}" y2="${yTop}" stroke="#38bdf8" stroke-width="0.5" stroke-dasharray="6,3" opacity="0.4"/>`;
 
-        // สัญลักษณ์กอหญ้าแฝกกระจายตัวสวยงามตลอดแนวยาว (Vetiver Tufts)
         for (let gx = x0 + xOff + 10; gx < x0 + xOff + spanLenPx; gx += 28) {
           els += `
             <path d="M${gx},${yTop - 10} Q${gx-3},${yTop-18} ${gx-5},${yTop-22} 
@@ -1198,18 +1180,16 @@
         }
       }
 
-      // 5. ANCHOR PILES (แนวเสาเข็มไม้ยูคาลิปตัสตอกยึดตลอดแนว)
       const pileCount = Math.max(5, Math.min(18, Math.round(currentLength / currentPileSpacing)));
       const pileStepPx = spanLenPx / (pileCount - 1);
       for (let p = 0; p < pileCount; p++) {
         let px = x0 + (p * pileStepPx);
         let pyHead = y0 - subBaseH + 2;
-        let pyTip = y0 + 38; // ตอกลึกลงไปในชั้นดินใต้น้ำ
+        let pyTip = y0 + 38;
         els += `<line x1="${px}" y1="${pyHead}" x2="${px}" y2="${pyTip}" stroke="#a16207" stroke-width="2.5" stroke-linecap="round"/>`;
         els += `<line x1="${px - 2.5}" y1="${pyHead}" x2="${px + 2.5}" y2="${pyHead}" stroke="#d97706" stroke-width="1"/>`;
       }
 
-      // 6. SPAN RULER (ไม้บรรทัดบอกระยะความยาวโครงการด้านล่าง)
       els += `
         <line x1="${x0}" y1="${y0 + 24}" x2="${x0 + spanLenPx}" y2="${y0 + 24}" stroke="#38bdf8" stroke-width="1.3"/>
         <line x1="${x0}" y1="${y0 + 19}" x2="${x0}" y2="${y0 + 29}" stroke="#38bdf8" stroke-width="1.5"/>
