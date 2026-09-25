@@ -5,7 +5,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Riverbank Bio-Engineering Pro Suite & Wide Architectural HUD</title>
+  <title>Riverbank Bio-Engineering Pro Suite & Dynamic Margin Engine</title>
 
   <!-- Google Fonts: Sarabun & Cinzel -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,16 +16,24 @@
     :root {
       --sp-1: 3px; --sp-2: 5px; --sp-3: 8px; --sp-4: 13px; --sp-5: 21px; --sp-6: 34px; --sp-7: 55px;
       --font-micro: 9px; --font-caption: 11px; --font-body: 13px; --font-sub: 16px; --font-title: 21px; --font-hero: 26px;
-      --bg-base: #030712; --bg-surface: #0f172a; --border-subtle: #334155; --border-gold: #b45309;
+      
+      /* Dynamic Greed Palette (เปลี่ยนตามระดับความโลภ) */
+      --greed-bg: #030712;
+      --greed-surface: #0f172a;
+      --greed-border: #334155;
+      --greed-accent: #10b981;
+      --greed-text: #f8fafc;
+      
       --accent-emerald: #10b981; --accent-gold: #f59e0b; --accent-cyan: #38bdf8; --accent-rose: #f43f5e;
-      --text-main: #f8fafc; --text-muted: #94a3b8;
+      --text-muted: #94a3b8;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body {
-      background-color: var(--bg-base); color: var(--text-main);
+      background-color: var(--greed-bg); color: var(--greed-text);
       font-family: "Sarabun", -apple-system, BlinkMacSystemFont, sans-serif;
       font-size: var(--font-caption); line-height: 1.5; padding-bottom: var(--sp-7);
+      transition: background-color 0.4s ease, color 0.4s ease;
     }
     .font-num { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; font-family: -apple-system-monospaced, "SF Mono", monospace; }
 
@@ -33,17 +41,18 @@
       position: sticky; top: 0; z-index: 100;
       background: rgba(15, 23, 42, 0.98);
       backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border-subtle); padding: var(--sp-3) var(--sp-4);
+      border-bottom: 1px solid var(--greed-border); padding: var(--sp-3) var(--sp-4);
       box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      transition: border-color 0.4s ease;
     }
     .hud-container { max-width: 1100px; margin: 0 auto; }
     .hud-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--sp-3); padding-bottom: var(--sp-2); }
     .brand-title { display: flex; align-items: center; gap: var(--sp-3); font-size: var(--font-sub); font-weight: 800; color: #fff; }
-    .status-dot { width: var(--sp-3); height: var(--sp-3); background: var(--accent-emerald); border-radius: 50%; box-shadow: 0 0 10px var(--accent-emerald); }
+    .status-dot { width: var(--sp-3); height: var(--sp-3); background: var(--greed-accent); border-radius: 50%; box-shadow: 0 0 10px var(--greed-accent); }
     
     .hud-btn-group { display: flex; gap: var(--sp-2); align-items: center; flex-wrap: wrap; }
     .btn-action {
-      background: var(--bg-surface); color: var(--text-main); border: 1px solid var(--border-subtle);
+      background: var(--greed-surface); color: var(--greed-text); border: 1px solid var(--greed-border);
       padding: var(--sp-2) var(--sp-3); border-radius: var(--sp-2); font-size: var(--font-caption); font-weight: 700; cursor: pointer;
     }
     .btn-admin { background: #334155; border-color: #475569; }
@@ -55,30 +64,34 @@
 
     .view-switcher {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-2);
-      background: #020617; border: 1px solid var(--border-subtle); padding: var(--sp-1); border-radius: var(--sp-3); margin-top: var(--sp-2);
+      background: #020617; border: 1px solid var(--greed-border); padding: var(--sp-1); border-radius: var(--sp-3); margin-top: var(--sp-2);
     }
     .view-btn { padding: var(--sp-2) 0; border: none; background: transparent; color: var(--text-muted); font-size: var(--font-caption); font-weight: 700; border-radius: var(--sp-2); cursor: pointer; text-align: center; }
     .view-btn.active { background: #0284c7; color: #ffffff; }
 
+    /* ================= DYNAMIC CONTROLS SLIDER GRID ================= */
     .slider-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2);
       margin-top: var(--sp-2); padding-top: var(--sp-2); border-top: 1px solid rgba(255,255,255,0.08);
     }
-    @media (min-width: 720px) { .slider-grid { grid-template-columns: 1.2fr 0.8fr 1fr 1fr; gap: var(--sp-3); } }
-    .slider-item { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); background: #090d16; padding: var(--sp-2) var(--sp-3); border-radius: var(--sp-2); border: 1px solid var(--border-subtle); }
+    @media (min-width: 840px) { .slider-grid { grid-template-columns: 1.1fr 0.8fr 0.9fr 0.9fr 1.3fr; gap: var(--sp-2); } }
+    .slider-item { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); background: #090d16; padding: var(--sp-2) var(--sp-3); border-radius: var(--sp-2); border: 1px solid var(--greed-border); }
     .slider-label { font-size: var(--font-micro); color: var(--text-muted); font-weight: 600; white-space: nowrap; }
-    .slider-item input[type="range"] { flex: 1; accent-color: var(--accent-emerald); height: 20px; cursor: pointer; }
-    .badge-val { background: var(--bg-surface); border: 1px solid var(--border-subtle); padding: 1px var(--sp-2); border-radius: 4px; color: #34d399; font-weight: 700; font-size: var(--font-caption); min-width: 44px; text-align: center; }
+    .slider-item input[type="range"] { flex: 1; accent-color: var(--greed-accent); height: 20px; cursor: pointer; }
+    .badge-val { background: var(--greed-surface); border: 1px solid var(--greed-border); padding: 1px var(--sp-2); border-radius: 4px; color: var(--greed-accent); font-weight: 700; font-size: var(--font-caption); min-width: 44px; text-align: center; }
+
+    /* GREED METER ITEM */
+    .slider-item.greed-item { border-color: var(--greed-accent); background: rgba(0,0,0,0.4); }
 
     .doc-sub-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-2); margin-top: var(--sp-2); background: rgba(0,0,0,0.3); padding: var(--sp-1); border-radius: var(--sp-2); }
     .doc-sub-btn { padding: var(--sp-1); border: 1px solid transparent; background: transparent; color: var(--text-muted); font-size: var(--font-micro); font-weight: 600; border-radius: 4px; cursor: pointer; }
-    .doc-sub-btn.active { background: var(--bg-surface); color: var(--accent-cyan); border-color: var(--accent-cyan); }
+    .doc-sub-btn.active { background: var(--greed-surface); color: var(--accent-cyan); border-color: var(--accent-cyan); }
 
-    .panel-box { max-width: 900px; margin: var(--sp-4) auto; padding: var(--sp-5); background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--sp-4); }
+    .panel-box { max-width: 900px; margin: var(--sp-4) auto; padding: var(--sp-5); background: var(--greed-surface); border: 1px solid var(--greed-border); border-radius: var(--sp-4); transition: background 0.4s ease, border-color 0.4s ease; }
     .panel-title { font-size: var(--font-sub); font-weight: 800; color: #fff; margin-bottom: var(--sp-2); display: flex; align-items: center; gap: var(--sp-2); }
     .panel-desc { font-size: var(--font-caption); color: var(--text-muted); margin-bottom: var(--sp-4); line-height: 1.6; }
 
-    .spider-item { background: #020617; border: 1px solid var(--border-subtle); border-radius: var(--sp-3); padding: var(--sp-4); margin-bottom: var(--sp-3); display: flex; flex-direction: column; gap: var(--sp-2); }
+    .spider-item { background: #020617; border: 1px solid var(--greed-border); border-radius: var(--sp-3); padding: var(--sp-4); margin-bottom: var(--sp-3); display: flex; flex-direction: column; gap: var(--sp-2); }
     .spider-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
     .spider-name { font-size: var(--font-body); font-weight: 700; color: #f8fafc; }
     .spider-status { font-size: var(--font-micro); font-weight: 700; padding: 2px var(--sp-2); border-radius: 4px; }
@@ -89,20 +102,78 @@
     .btn-apply-market { background: #334155; color: #f1f5f9; border: 1px solid #475569; padding: var(--sp-1) var(--sp-3); border-radius: 4px; font-size: var(--font-caption); font-weight: 700; cursor: pointer; }
 
     .merit-stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-3); margin-bottom: var(--sp-4); }
-    @media (min-width: 600px) { .merit-stats-grid { grid-template-columns: repeat(4, 1fr); gap: var(--sp-4); } }
-    .stat-card { background: #020617; border: 1px solid var(--border-subtle); border-radius: var(--sp-3); padding: var(--sp-4); text-align: center; }
-    .stat-val { font-size: var(--font-hero); font-weight: 800; color: var(--accent-emerald); margin-top: var(--sp-1); }
-    .stat-lbl { font-size: var(--font-micro); color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+    @media (min-width: 600px) { .merit-stats-grid { grid-template-columns: repeat(4, 1fr); gap: var(--sp-3); } }
+    .stat-card { background: #020617; border: 1px solid var(--greed-border); border-radius: var(--sp-3); padding: var(--sp-3) var(--sp-4); text-align: center; }
+    .stat-val { font-size: var(--font-hero); font-weight: 800; color: var(--greed-accent); margin-top: 2px; }
+    .stat-lbl { font-size: var(--font-micro); color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+
+    .chart-container { background: #020617; border: 1px solid var(--greed-border); border-radius: var(--sp-3); padding: var(--sp-4); margin-top: var(--sp-3); }
+    .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--sp-3); }
+    .chart-title { font-size: var(--font-caption); font-weight: 700; color: #cbd5e1; }
+    .chart-legend { display: flex; gap: var(--sp-3); font-size: var(--font-micro); color: var(--text-muted); }
+    .legend-item { display: flex; align-items: center; gap: 4px; }
+    .legend-color { width: 8px; height: 8px; border-radius: 2px; }
+
+    .ledger-table { width: 100%; border-collapse: collapse; margin-top: var(--sp-3); font-size: var(--font-micro); }
+    .ledger-table th { background: #090d16; color: var(--text-muted); padding: var(--sp-2); text-align: left; border-bottom: 1px solid var(--greed-border); }
+    .ledger-table td { padding: var(--sp-2); border-bottom: 1px solid rgba(255,255,255,0.05); color: #cbd5e1; }
+
+    /* ================= GOLDEN RATIO ROADMAP BANNERS ================= */
+    .banner-grid-two-col {
+      display: grid; grid-template-columns: 1fr; gap: var(--sp-4); margin-top: var(--sp-5);
+    }
+    @media (min-width: 768px) {
+      .banner-grid-two-col { grid-template-columns: 1fr 1fr; }
+    }
+
+    .roadmap-banner-wrapper {
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.7) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      border-radius: var(--sp-4);
+      padding: var(--sp-4);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    .roadmap-banner-wrapper.guest-theme {
+      background: linear-gradient(135deg, rgba(6, 78, 59, 0.7) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+    .roadmap-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(245, 158, 11, 0.15); border: 1px solid var(--accent-gold);
+      color: #fde68a; font-size: var(--font-micro); font-weight: 800;
+      padding: 2px var(--sp-3); border-radius: 20px; text-transform: uppercase; margin-bottom: var(--sp-2);
+    }
+    .roadmap-badge.guest-badge {
+      background: rgba(56, 189, 248, 0.15); border-color: var(--accent-cyan); color: #bae6fd;
+    }
+    .roadmap-title { font-size: var(--font-body); font-weight: 800; color: #fff; margin-bottom: 2px; }
+    .roadmap-desc { font-size: var(--font-micro); color: var(--text-muted); line-height: 1.5; margin-bottom: var(--sp-3); }
+
+    .roadmap-cards-col { display: flex; flex-direction: column; gap: var(--sp-2); }
+    .feature-mock-card {
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(2, 6, 23, 0.75); border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: var(--sp-2) var(--sp-3); border-radius: var(--sp-2);
+    }
+    .feature-name { font-size: var(--font-micro); font-weight: 700; color: #f8fafc; display: flex; align-items: center; gap: 6px; }
+    .star-icon { color: var(--accent-gold); font-size: 11px; }
+    .feature-tag-pending {
+      font-size: 8.5px; font-weight: 800; color: var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 1px 5px; border-radius: 4px;
+    }
 
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); margin-bottom: var(--sp-3); }
     .form-group { text-align: left; }
     .form-label { font-size: var(--font-caption); color: #cbd5e1; font-weight: 700; margin-bottom: var(--sp-1); display: block; }
-    .text-input { width: 100%; padding: var(--sp-3); font-size: var(--font-body); background: #020617; border: 1px solid var(--border-subtle); border-radius: var(--sp-2); color: #fff; outline: none; font-family: inherit; }
+    .text-input { width: 100%; padding: var(--sp-3); font-size: var(--font-body); background: #020617; border: 1px solid var(--greed-border); border-radius: var(--sp-2); color: #fff; outline: none; font-family: inherit; }
 
     .dossier-wrapper { max-width: 900px; margin: var(--sp-4) auto; padding: 0 var(--sp-3); display: flex; flex-direction: column; gap: var(--sp-6); }
-    .page-sheet { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--sp-4); padding: var(--sp-5); box-shadow: 0 20px 45px rgba(0,0,0,0.6); position: relative; }
+    .page-sheet { background: var(--greed-surface); border: 1px solid var(--greed-border); border-radius: var(--sp-4); padding: var(--sp-5); box-shadow: 0 20px 45px rgba(0,0,0,0.6); position: relative; transition: background 0.4s ease, border-color 0.4s ease; }
     .page-sheet.merit-theme {
-      background: #0a0f1d; border: 2px solid var(--border-gold);
+      background: #0a0f1d; border: 2px solid #b45309;
       box-shadow: 0 0 30px rgba(180, 83, 9, 0.25);
     }
     
@@ -114,17 +185,17 @@
     }
     .paid-stamp {
       display: none; position: absolute; top: 110px; right: var(--sp-5); z-index: 10;
-      border: 3px solid var(--accent-emerald); color: var(--accent-emerald);
+      border: 3px solid var(--greed-accent); color: var(--greed-accent);
       padding: var(--sp-1) var(--sp-4); border-radius: var(--sp-2); font-weight: 900; font-size: var(--font-title);
       letter-spacing: 2px; transform: rotate(-8deg); background: rgba(15, 23, 42, 0.95);
     }
 
-    .doc-top-bar { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--border-subtle); padding-bottom: var(--sp-4); }
-    .doc-type-title { font-size: var(--font-title); font-weight: 800; color: var(--accent-emerald); }
+    .doc-top-bar { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--greed-border); padding-bottom: var(--sp-4); }
+    .doc-type-title { font-size: var(--font-title); font-weight: 800; color: var(--greed-accent); }
     .doc-type-sub { font-size: var(--font-caption); color: var(--text-muted); }
     .doc-meta { text-align: right; font-size: var(--font-caption); color: #cbd5e1; }
 
-    .info-grid { display: grid; grid-template-columns: 1.618fr 1fr; gap: var(--sp-4); margin: var(--sp-4) 0; background: #020617; border: 1px solid var(--border-subtle); border-radius: var(--sp-3); padding: var(--sp-4); font-size: var(--font-caption); }
+    .info-grid { display: grid; grid-template-columns: 1.618fr 1fr; gap: var(--sp-4); margin: var(--sp-4) 0; background: #020617; border: 1px solid var(--greed-border); border-radius: var(--sp-3); padding: var(--sp-4); font-size: var(--font-caption); }
     .info-col h4 { font-size: var(--font-micro); color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 2px; }
     .info-col .name { font-size: var(--font-body); font-weight: 800; color: #fff; }
     .info-col .detail { color: var(--text-muted); font-size: var(--font-caption); }
@@ -132,53 +203,50 @@
     .table-container { overflow-x: auto; margin-bottom: var(--sp-4); }
     table { width: 100%; border-collapse: collapse; font-size: var(--font-caption); }
     thead tr { background: #020617; }
-    th { text-align: left; padding: var(--sp-3) var(--sp-2); color: var(--text-muted); border-bottom: 1.5px solid var(--border-subtle); font-size: var(--font-micro); text-transform: uppercase; }
-    td { padding: var(--sp-3) var(--sp-2); border-bottom: 1px solid var(--border-subtle); color: #cbd5e1; }
+    th { text-align: left; padding: var(--sp-3) var(--sp-2); color: var(--text-muted); border-bottom: 1.5px solid var(--greed-border); font-size: var(--font-micro); text-transform: uppercase; }
+    td { padding: var(--sp-3) var(--sp-2); border-bottom: 1px solid var(--greed-border); color: #cbd5e1; }
     .desc-th { font-weight: 700; color: #fff; font-size: var(--font-body); }
     .desc-en { font-size: var(--font-micro); color: var(--text-muted); }
 
-    .summary-grid { display: grid; grid-template-columns: 1.618fr 1fr; gap: var(--sp-4); padding-top: var(--sp-4); border-top: 2px solid var(--border-subtle); }
-    .milestone-box { background: #020617; border: 1px solid var(--border-subtle); border-radius: var(--sp-2); padding: var(--sp-3) var(--sp-4); font-size: var(--font-caption); }
+    .summary-grid { display: grid; grid-template-columns: 1.618fr 1fr; gap: var(--sp-4); padding-top: var(--sp-4); border-top: 2px solid var(--greed-border); }
+    .milestone-box { background: #020617; border: 1px solid var(--greed-border); border-radius: var(--sp-2); padding: var(--sp-3) var(--sp-4); font-size: var(--font-caption); }
     .bank-box { background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: var(--sp-2); padding: var(--sp-3) var(--sp-4); font-size: var(--font-caption); margin-top: var(--sp-2); }
-    .total-wrapper { text-align: right; background: #020617; border: 1px solid var(--border-subtle); border-radius: var(--sp-2); padding: var(--sp-4); }
-    .grand-total-amount { font-size: var(--font-hero); font-weight: 900; color: var(--accent-emerald); }
+    .total-wrapper { text-align: right; background: #020617; border: 1px solid var(--greed-border); border-radius: var(--sp-2); padding: var(--sp-4); }
+    .grand-total-amount { font-size: var(--font-hero); font-weight: 900; color: var(--greed-accent); }
     .baht-text-display { font-size: var(--font-caption); color: var(--accent-cyan); font-weight: 700; margin-top: 2px; }
 
-    .signature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-5); margin-top: var(--sp-5); padding-top: var(--sp-4); border-top: 1px dashed var(--border-subtle); }
+    .signature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-5); margin-top: var(--sp-5); padding-top: var(--sp-4); border-top: 1px dashed var(--greed-border); }
     .sig-col { text-align: center; font-size: var(--font-caption); color: var(--text-muted); }
     .sig-line { width: 61.8%; height: 1px; background: #475569; margin: 34px auto 4px auto; }
 
-    .cad-sheet-title { font-size: var(--font-sub); font-weight: 800; color: #fff; margin-bottom: var(--sp-3); border-bottom: 1.5px solid var(--border-subtle); padding-bottom: var(--sp-2); }
-    .diagram-panel { margin-bottom: var(--sp-3); background: #020617; border: 1px solid var(--border-subtle); border-radius: var(--sp-3); padding: var(--sp-3); position: relative; }
+    .cad-sheet-title { font-size: var(--font-sub); font-weight: 800; color: #fff; margin-bottom: var(--sp-3); border-bottom: 1.5px solid var(--greed-border); padding-bottom: var(--sp-2); }
+    .diagram-panel { margin-bottom: var(--sp-3); background: #020617; border: 1px solid var(--greed-border); border-radius: var(--sp-3); padding: var(--sp-3); position: relative; }
     .diagram-header { display: flex; justify-content: space-between; font-size: var(--font-caption); margin-bottom: var(--sp-1); }
-    .svg-canvas { width: 100%; height: auto; border-radius: var(--sp-1); background: #090d16; border: 1px solid var(--border-subtle); }
+    .svg-canvas { width: 100%; height: auto; border-radius: var(--sp-1); background: #090d16; border: 1px solid var(--greed-border); }
     .svg-perspective { max-height: 245px; }
     .svg-cross { max-height: 130px; }
 
     .specs-table { width: 100%; border-collapse: collapse; font-size: var(--font-caption); margin-top: var(--sp-2); }
-    .specs-table td { padding: var(--sp-2) var(--sp-3); border: 1px solid var(--border-subtle); color: #cbd5e1; }
+    .specs-table td { padding: var(--sp-2) var(--sp-3); border: 1px solid var(--greed-border); color: #cbd5e1; }
     .specs-table td.lbl { background: #020617; color: var(--text-muted); font-weight: 700; width: 30%; }
 
-    .terms-box { background: #020617; border: 1px solid var(--border-subtle); border-radius: var(--sp-3); padding: var(--sp-4); font-size: var(--font-caption); line-height: 1.6; color: #cbd5e1; margin-bottom: var(--sp-3); }
-    .terms-box h4 { color: var(--accent-emerald); font-size: var(--font-body); margin-bottom: var(--sp-1); }
+    .terms-box { background: #020617; border: 1px solid var(--greed-border); border-radius: var(--sp-3); padding: var(--sp-4); font-size: var(--font-caption); line-height: 1.6; color: #cbd5e1; margin-bottom: var(--sp-3); }
+    .terms-box h4 { color: var(--greed-accent); font-size: var(--font-body); margin-bottom: var(--sp-1); }
     .terms-box ul { padding-left: var(--sp-5); }
 
     /* ================= PAGE 4: SACRED YANTRA MANDALA ================= */
     .yantra-mandala-box {
       width: 100%; max-width: 680px; margin: 0 auto;
       background: radial-gradient(circle at center, #0f172a 0%, #030712 100%);
-      border: 2px solid var(--border-gold);
+      border: 2px solid #b45309;
       border-radius: 12px;
       padding: 22px 24px;
       position: relative;
       box-shadow: 0 0 35px rgba(180, 83, 9, 0.25);
     }
-    .yantra-bg-svg {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      pointer-events: none; opacity: 0.10; z-index: 1;
-    }
+    .yantra-bg-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.10; z-index: 1; }
     .yantra-content { position: relative; z-index: 2; }
-    .yantra-header { border-bottom: 1.5px solid var(--border-gold); padding-bottom: 6px; margin-bottom: 10px; text-align: center; }
+    .yantra-header { border-bottom: 1.5px solid #b45309; padding-bottom: 6px; margin-bottom: 10px; text-align: center; }
     .yantra-title { font-size: 17px; font-weight: 800; color: #fbbf24; letter-spacing: 0.5px; }
     .yantra-sub { font-size: 10px; color: #d97706; font-weight: 600; margin-top: 1px; }
     
@@ -197,15 +265,12 @@
     }
 
     .modal-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: var(--sp-4); }
-    .modal-card { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--sp-4); padding: var(--sp-5); max-width: 440px; width: 100%; text-align: center; }
-    .pin-input { width: 100%; padding: var(--sp-3); font-size: var(--font-title); text-align: center; letter-spacing: 8px; background: #020617; border: 1.5px solid var(--border-subtle); border-radius: var(--sp-2); color: #34d399; font-weight: 800; margin-bottom: var(--sp-3); outline: none; }
-    .log-box { max-height: 220px; overflow-y: auto; text-align: left; background: #020617; border: 1px solid var(--border-subtle); border-radius: var(--sp-2); padding: var(--sp-3); font-family: monospace; font-size: 10px; color: #fca5a5; margin-bottom: var(--sp-3); word-break: break-all; }
+    .modal-card { background: var(--greed-surface); border: 1px solid var(--greed-border); border-radius: var(--sp-4); padding: var(--sp-5); max-width: 440px; width: 100%; text-align: center; }
+    .pin-input { width: 100%; padding: var(--sp-3); font-size: var(--font-title); text-align: center; letter-spacing: 8px; background: #020617; border: 1.5px solid var(--greed-border); border-radius: var(--sp-2); color: #34d399; font-weight: 800; margin-bottom: var(--sp-3); outline: none; }
+    .log-box { max-height: 220px; overflow-y: auto; text-align: left; background: #020617; border: 1px solid var(--greed-border); border-radius: var(--sp-2); padding: var(--sp-3); font-family: monospace; font-size: 10px; color: #fca5a5; margin-bottom: var(--sp-3); word-break: break-all; }
 
     /* ================= BULLETPROOF PRINT ENGINE (STRICT 4 PAGES - NO BLANK PAGE 5) ================= */
-    @page {
-      size: A4 portrait;
-      margin: 8mm 10mm;
-    }
+    @page { size: A4 portrait; margin: 8mm 10mm; }
 
     @media print {
       html, body {
@@ -226,34 +291,20 @@
         position: relative !important;
       }
 
-      .page-sheet:last-of-type,
-      #page-4 {
-        page-break-after: auto !important;
-        break-after: auto !important;
+      .page-sheet:last-of-type, #page-4 {
+        page-break-after: auto !important; break-after: auto !important;
       }
       
       .page-sheet.merit-theme {
-        display: block !important;
-        border: none !important;
-        background: #ffffff !important;
-        padding: 0 !important;
-        box-shadow: none !important;
-        min-height: 0 !important;
+        display: block !important; border: none !important; background: #ffffff !important;
+        padding: 0 !important; box-shadow: none !important; min-height: 0 !important;
       }
 
       .yantra-mandala-box {
-        display: block !important;
-        box-sizing: border-box !important;
-        width: 95% !important;
-        max-width: 170mm !important;
-        margin: 32mm auto 0 auto !important;
-        border: 1.5pt solid #78350f !important;
-        border-radius: 4pt !important;
-        background: #ffffff !important;
-        padding: 14pt 18pt !important;
-        box-shadow: none !important;
-        page-break-inside: avoid !important;
-        break-inside: avoid !important;
+        display: block !important; box-sizing: border-box !important; width: 95% !important; max-width: 170mm !important;
+        margin: 32mm auto 0 auto !important; border: 1.5pt solid #78350f !important; border-radius: 4pt !important;
+        background: #ffffff !important; padding: 14pt 18pt !important; box-shadow: none !important;
+        page-break-inside: avoid !important; break-inside: avoid !important;
       }
       .yantra-bg-svg { opacity: 0.08 !important; }
       .yantra-header { padding-bottom: 3pt !important; margin-bottom: 5pt !important; border-bottom: 1pt solid #78350f !important; }
@@ -265,17 +316,11 @@
         color: #78350f !important; font-size: 7.2pt !important; line-height: 1.35 !important;
         padding: 4pt 6pt !important; margin: 4pt 0 !important;
       }
-      .yantra-body {
-        color: #000000 !important; font-size: 7.2pt !important; line-height: 1.35 !important;
-        margin: 4pt 0 !important;
-      }
+      .yantra-body { color: #000000 !important; font-size: 7.2pt !important; line-height: 1.35 !important; margin: 4pt 0 !important; }
       .yantra-body ul { padding-left: 10pt !important; margin-top: 2pt !important; }
       .yantra-body li { margin-bottom: 1pt !important; }
 
-      .vermilion-chop {
-        border-color: #b91c1c !important; color: #b91c1c !important;
-        font-size: 7.5pt !important; padding: 2pt 5pt !important;
-      }
+      .vermilion-chop { border-color: #b91c1c !important; color: #b91c1c !important; font-size: 7.5pt !important; padding: 2pt 5pt !important; }
 
       .doc-top-bar { border-bottom: 2pt solid #000000 !important; padding-bottom: 4pt !important; margin-bottom: 5pt !important; }
       .doc-type-title { color: #064e3b !important; font-size: 13.5pt !important; font-weight: 800 !important; }
@@ -341,7 +386,7 @@
       <div class="hud-top">
         <div class="brand-title">
           <span class="status-dot"></span>
-          <span>Bio-Engineering Suite & Yantra HUD</span>
+          <span>Bio-Engineering Suite & Greed Gauge HUD</span>
         </div>
         <div class="hud-btn-group">
           <button type="button" id="btnAdmin" class="btn-action btn-admin" onclick="openAdminModal()">🔒 สิทธิ์: Demo</button>
@@ -359,6 +404,7 @@
         <button type="button" id="vbtn-merit" class="view-btn" onclick="switchMainView('merit')">🌟 แต้มบุญ</button>
       </nav>
 
+      <!-- SLIDERS WITH GREED/PROFIT MARGIN GAUGE -->
       <div class="slider-grid">
         <div class="slider-item">
           <span class="slider-label" id="lbl-len">ยาว:</span>
@@ -379,6 +425,12 @@
           <span class="slider-label" id="lbl-pile">เสาเข็ม:</span>
           <input type="range" id="pileRange" min="0.5" max="2.0" step="0.1" value="1.0" oninput="updateParam('pile', this.value)">
           <div class="badge-val"><span id="pileDisplay">1.0</span>m</div>
+        </div>
+        <!-- มาตรวัดกำไร & ความโลภ (Dynamic Greed Gauge) -->
+        <div class="slider-item greed-item">
+          <span class="slider-label" id="lbl-margin" style="color:var(--greed-accent); font-weight:800;">กำไร:</span>
+          <input type="range" id="marginRange" min="0" max="50" step="1" value="15" oninput="updateParam('margin', this.value)">
+          <div class="badge-val" id="greedBadgeDisp" style="min-width:68px;">+15% (พอดี)</div>
         </div>
       </div>
 
@@ -452,7 +504,7 @@
 
   <!-- ================= TAB VIEW 3: WHITE-LABEL CONTRACTOR ================= -->
   <section id="panel-provider" class="panel-box no-print" style="display: none;">
-    <div class="panel-title">🛠️ ตั้งค่าข้อมูลผู้รับเหมา (เปลี่ยนเป็นแบรนด์ของเพื่อนช่างได้เลย)</div>
+    <div class="panel-title">🛠️ ตั้งค่าข้อมูลผู้รับเหมา (White-Label Profile)</div>
     <div class="panel-desc">
       เครื่องมือนี้เป็นของทุกคน เพื่อนช่างสามารถกรอกข้อมูลกิจการของตัวเองได้ ข้อมูลจะจำไว้ในโทรศัพท์เครื่องนี้โดยเฉพาะ เอกสารทั้ง 4 แผ่นจะเปลี่ยนเป็นชื่อท่านทันที
     </div>
@@ -497,11 +549,11 @@
     </div>
   </section>
 
-  <!-- ================= TAB VIEW 4: MERIT & IMPACT ANALYTICS ================= -->
+  <!-- ================= TAB VIEW 4: MERIT & BEAUTIFUL IMPACT ANALYTICS ================= -->
   <section id="panel-merit" class="panel-box no-print" style="display: none;">
     <div class="panel-title">🌟 สถิติแต้มบุญ & มูลค่าทางเศรษฐกิจที่ช่วยเกื้อกูลผู้คน</div>
     <div class="panel-desc">
-      ความรู้และซอฟต์แวร์ชุดนี้มอบให้เป็นธรรมทาน บันทึกผลสะสมเพื่อเป็นกำลังใจให้ทีมงานว่าผลงานร่วมกันนี้ได้ช่วยพยุงคนไปเท่าไหร่แล้ว
+      ความรู้และซอฟต์แวร์ชุดนี้สร้างสรรค์ขึ้นเป็นธรรมทาน บันทึกสถิติเพื่อเป็นกำลังใจว่าซอฟต์แวร์ชิ้นนี้ได้ช่วยเสริมความมั่นคงและพยุงเพื่อนช่างไปเท่าไหร่แล้ว
     </div>
 
     <div class="merit-stats-grid font-num">
@@ -523,9 +575,99 @@
       </div>
     </div>
 
-    <div style="background:#020617; border:1px solid var(--border-subtle); border-radius:var(--sp-2); padding:var(--sp-3); margin-top:var(--sp-3);">
-      <div style="font-size:var(--font-caption); font-weight:700; color:#cbd5e1; margin-bottom:var(--sp-2);">📈 แนวโน้มขนาดโครงการสะสม (Impact Growth Sparkline)</div>
-      <svg id="merit-chart" viewBox="0 0 500 80" style="width:100%; height:75px; background:#090d16; border-radius:4px;"></svg>
+    <div class="chart-container">
+      <div class="chart-header">
+        <div class="chart-title">📈 สถิติขนาดและมูลค่างานสะสม (Impact Growth Analytics)</div>
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-color" style="background:#0284c7;"></div><span>ประวัติก่อนหน้า</span></div>
+          <div class="legend-item"><div class="legend-color" style="background:#10b981;"></div><span>โครงการปัจจุบัน</span></div>
+        </div>
+      </div>
+      <svg id="merit-chart" viewBox="0 0 540 100" style="width:100%; height:110px; background:#090d16; border-radius:6px; border:1px solid var(--greed-border);"></svg>
+      
+      <table class="ledger-table font-num">
+        <thead>
+          <tr>
+            <th>วันที่-เวลา</th>
+            <th>ผู้รับเหมา</th>
+            <th>โครงการ / ไซต์งาน</th>
+            <th style="text-align:right;">ขอบเขต (L)</th>
+            <th style="text-align:right;">มูลค่ารวม</th>
+          </tr>
+        </thead>
+        <tbody id="merit-history-body"></tbody>
+      </table>
+    </div>
+
+    <!-- ================= DUAL ROADMAP BANNERS: ADMIN & GUEST ================= -->
+    <div class="banner-grid-two-col">
+      <!-- 1. ADMIN / CONTRACTOR UPCOMING ROADMAP -->
+      <div class="roadmap-banner-wrapper">
+        <div class="roadmap-badge">
+          <span>👑</span>
+          <span>ฝั่งช่าง / CONTRACTOR HUD</span>
+        </div>
+        <div class="roadmap-title">🌟 แผนฟีเจอร์ฝั่งผู้รับเหมา</div>
+        <div class="roadmap-desc">เครื่องมืออัตโนมัติขั้นสูงสำหรับบริหารโครงการและเงินทุน</div>
+
+        <div class="roadmap-cards-col">
+          <div class="feature-mock-card">
+            <div class="feature-name">
+              <span class="star-icon">★</span>
+              <span>LINE Notify แจ้งเตือนเงินเข้า</span>
+            </div>
+            <span class="feature-tag-pending">SOON</span>
+          </div>
+          <div class="feature-mock-card">
+            <div class="feature-name">
+              <span class="star-icon">★</span>
+              <span>ส่งออกไฟล์ CAD .DXF เข้าเครื่องจักร</span>
+            </div>
+            <span class="feature-tag-pending">PLANNING</span>
+          </div>
+          <div class="feature-mock-card">
+            <div class="feature-name">
+              <span class="star-icon">★</span>
+              <span>ระบบจัดคิวสั่งกระสอบชีวภาพลดต้นทุน</span>
+            </div>
+            <span class="feature-tag-pending">RESEARCH</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. GUEST / CLIENT TRANSPARENCY ROADMAP -->
+      <div class="roadmap-banner-wrapper guest-theme">
+        <div class="roadmap-badge guest-badge">
+          <span>👤</span>
+          <span>ฝั่งผู้ว่าจ้าง / GUEST HUB</span>
+        </div>
+        <div class="roadmap-title">🌟 แผนฟีเจอร์ฝั่งลูกค้าเจ้าของบ้าน</div>
+        <div class="roadmap-desc">ระบบตรวจสอบสเปกและความโปร่งใสเพื่อความสบายใจสูงสุด</div>
+
+        <div class="roadmap-cards-col">
+          <div class="feature-mock-card">
+            <div class="feature-name">
+              <span class="star-icon" style="color:var(--accent-cyan);">★</span>
+              <span>QR Code ตรวจสอบใบเซอร์วัสดุจริง</span>
+            </div>
+            <span class="feature-tag-pending" style="color:var(--accent-emerald); border-color:var(--accent-emerald);">NEXT</span>
+          </div>
+          <div class="feature-mock-card">
+            <div class="feature-name">
+              <span class="star-icon" style="color:var(--accent-cyan);">★</span>
+              <span>เครื่องคำนวณงวดผ่อนสบายใจ 0%</span>
+            </div>
+            <span class="feature-tag-pending" style="color:var(--accent-emerald); border-color:var(--accent-emerald);">PLANNING</span>
+          </div>
+          <div class="feature-mock-card">
+            <div class="feature-name">
+              <span class="star-icon" style="color:var(--accent-cyan);">★</span>
+              <span>บัตรรับประกันผลงานดิจิทัล 1 ปีเต็ม</span>
+            </div>
+            <span class="feature-tag-pending" style="color:var(--accent-emerald); border-color:var(--accent-emerald);">CONCEPT</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -629,7 +771,7 @@
 
       <div class="diagram-panel">
         <div class="diagram-header">
-          <span style="color:#cbd5e1; font-weight:700;" id="p2-fig1">1. ทัศนียภาพมุมกว้างแบบสเก็ตช์สถาปัตย์ (Wide-Angle Architectural Sketch - <span id="sketch-len-tag" style="color:var(--accent-emerald);">32.5</span> ม.)</span>
+          <span style="color:#cbd5e1; font-weight:700;" id="p2-fig1">1. ทัศนียภาพมุมกว้างแบบสเก็ตช์สถาปัตย์ (Wide-Angle Architectural Sketch - <span id="sketch-len-tag" style="color:var(--greed-accent);">32.5</span> ม.)</span>
           <span style="color:var(--text-muted); font-size:var(--font-micro);" id="p2-sub1">เส้นนำสายตา Vanishing Rays & Hand-Drawn Lines</span>
         </div>
         <svg id="sketch-canvas" viewBox="0 0 540 245" class="svg-canvas svg-perspective"></svg>
@@ -638,7 +780,7 @@
       <div class="diagram-panel">
         <div class="diagram-header">
           <span style="color:#cbd5e1; font-weight:700;" id="p2-fig2">2. รูปตัดขวางเชิงวิศวกรรม (Cross Section Structural Hatching)</span>
-          <span id="cad-status-tag" style="color:var(--accent-emerald); font-weight:700;">สโลปปลอดภัย</span>
+          <span id="cad-status-tag" style="color:var(--greed-accent); font-weight:700;">สโลปปลอดภัย</span>
         </div>
         <svg id="cad-canvas" viewBox="0 0 540 130" class="svg-canvas svg-cross"></svg>
       </div>
@@ -806,6 +948,8 @@
   <!-- ================= JAVASCRIPT ENGINE ================= -->
   <script>
     const CRASH_STORAGE_KEY = 'riverbank_telemetry_errors_v1';
+    const MERIT_STORAGE_KEY = 'riverbank_merit_ledger_v1';
+
     let crashLogs = [];
     try { crashLogs = JSON.parse(localStorage.getItem(CRASH_STORAGE_KEY) || '[]'); } catch (e) { crashLogs = []; }
 
@@ -817,7 +961,7 @@
         msg: message || 'Unknown Error',
         loc: `${source || 'inline'}:${lineno || 0}:${colno || 0}`,
         stack: (stack || '').substring(0, 300),
-        state: { L: currentLength, T: currentTiers, A: currentAngle, P: currentPileSpacing, Lang: currentLang },
+        state: { L: currentLength, T: currentTiers, A: currentAngle, P: currentPileSpacing, M: currentMargin, Lang: currentLang },
         ua: navigator.userAgent.substring(0, 100)
       };
       crashLogs.unshift(entry);
@@ -850,7 +994,7 @@
             <b>#${i + 1} [${c.timeThai}] ${c.type}</b><br>
             Msg: ${c.msg}<br>
             Loc: ${c.loc}<br>
-            State: L=${c.state.L}m, T=${c.state.T}, A=${c.state.A}°, Lang=${c.state.Lang}<br>
+            State: L=${c.state.L}m, T=${c.state.T}, A=${c.state.A}°, Margin=${c.state.M}%, Lang=${c.state.Lang}<br>
             ${c.stack ? `Stack: ${c.stack}<br>` : ''}
           </div>
         `).join('');
@@ -874,14 +1018,26 @@
     let currentTiers = 3;
     let currentAngle = 32;
     let currentPileSpacing = 1.0;
+    let currentMargin = 15; // เปอร์เซ็นต์กำไร (Greed Level: 0 - 50%)
     let currentMode = 'quotation';
     let currentLang = 'th';
     let isOwnerUnlocked = false;
 
-    let totalProjects = 1;
+    let meritHistory = [];
+    try {
+      meritHistory = JSON.parse(localStorage.getItem(MERIT_STORAGE_KEY) || '[]');
+    } catch(e) { meritHistory = []; }
+
+    if (meritHistory.length === 0) {
+      meritHistory = [
+        { time: '25 ก.ย. 21:00', contractor: 'ช่างเบิร์ด', project: 'ตลิ่งริมคลองธรรมชาติ', len: 32.5, val: 24500 }
+      ];
+    }
+
+    let totalProjects = meritHistory.length;
     let totalPrints = 0;
-    let totalValueCreated = 24500;
-    let totalMetersProtected = 32.5;
+    let totalValueCreated = meritHistory.reduce((s, x) => s + (x.val || 0), 0);
+    let totalMetersProtected = meritHistory.reduce((s, x) => s + (x.len || 0), 0);
 
     let baseItems = [
       { id: '1.1', th: 'ถุง Geotextile 250 gsm (กระสอบสเต็ป)', en: 'Non-Woven Geotextile Bio-Bags (250 gsm)', tierScale: true, ratePerTier: 2.359, unitTh: 'ใบ', unitEn: 'bags', price: 35 },
@@ -894,6 +1050,46 @@
       { id: '3.2', th: 'ค่าแรงถมดินจัดระเบียงเดินริมน้ำ', en: 'Labor: Earth Compaction & Terrace Shaping', isLump: true, tierLaborScale: true, basePrice: 2500, perTierAdd: 350, unitTh: 'งาน', unitEn: 'lot' },
       { id: '3.3', th: 'สำรองสภาพดินเลนและระดับน้ำหน้างาน', en: 'Hydrology & Tidal Fluctuations Contingency', isLump: true, basePrice: 1500, unitTh: 'งาน', unitEn: 'lot' }
     ];
+
+    /* ================= DYNAMIC GREED THEME ENGINE ================= */
+    function applyGreedTheme(marginVal) {
+      const root = document.documentElement;
+      const greedBadge = document.getElementById('greedBadgeDisp');
+
+      if (marginVal <= 10) {
+        // 0% - 10%: สว่างบริสุทธิ์ (โลภน้อย / สัมมาอาชีวะแท้จริง)
+        root.style.setProperty('--greed-bg', '#09131a');
+        root.style.setProperty('--greed-surface', '#0f232e');
+        root.style.setProperty('--greed-border', '#38bdf8');
+        root.style.setProperty('--greed-accent', '#38bdf8');
+        greedBadge.style.color = '#38bdf8';
+        greedBadge.innerText = `+${marginVal}% (ขาวบริสุทธิ์)`;
+      } else if (marginVal <= 22) {
+        // 11% - 22%: เขียวมรกตสมดุล (พอดีกินพอดีใช้ เลี้ยงลูกน้องได้)
+        root.style.setProperty('--greed-bg', '#030712');
+        root.style.setProperty('--greed-surface', '#0f172a');
+        root.style.setProperty('--greed-border', '#10b981');
+        root.style.setProperty('--greed-accent', '#10b981');
+        greedBadge.style.color = '#34d399';
+        greedBadge.innerText = `+${marginVal}% (สมดุล)`;
+      } else if (marginVal <= 35) {
+        // 23% - 35%: ทอง/ส้มอำพัน (เริ่มสะสมกำไรหนา)
+        root.style.setProperty('--greed-bg', '#120b03');
+        root.style.setProperty('--greed-surface', '#221405');
+        root.style.setProperty('--greed-border', '#f59e0b');
+        root.style.setProperty('--greed-accent', '#f59e0b');
+        greedBadge.style.color = '#fbbf24';
+        greedBadge.innerText = `+${marginVal}% (กำไรหนา)`;
+      } else {
+        // 36% - 50%: สีแดงเพลิงแผดเผา (โลภมาก ไฟกิเลสลุกท่วม)
+        root.style.setProperty('--greed-bg', '#1c0408');
+        root.style.setProperty('--greed-surface', '#2c070d');
+        root.style.setProperty('--greed-border', '#f43f5e');
+        root.style.setProperty('--greed-accent', '#f43f5e');
+        greedBadge.style.color = '#f87171';
+        greedBadge.innerText = `+${marginVal}% (ไฟโลภลุก🔥)`;
+      }
+    }
 
     function thaiBahtText(number) {
       if (isNaN(number) || number === 0) return 'ศูนย์บาทถ้วน';
@@ -1023,6 +1219,7 @@
       if (type === 'tiers') currentTiers = parseInt(val);
       if (type === 'angle') currentAngle = parseInt(val);
       if (type === 'pile') currentPileSpacing = parseFloat(val);
+      if (type === 'margin') currentMargin = parseInt(val);
       renderAll();
     }
 
@@ -1042,6 +1239,7 @@
         ? `📌 ใบเสนอราคาเบื้องต้น: งานตลิ่งนิเวศน์\nผู้รับเหมา: ${prov}\n📏 ความยาว: ${currentLength} ม. (${currentTiers} ชั้น / มุม ${currentAngle}°)\n💰 ยอดสุทธิ: ${total}\n💵 มัดจำเปิดงาน 50%: ${document.getElementById('inst-1').innerText}\n(คำนวณผ่าน Riverbank Bio-HUD Golden Edition)`
         : `📌 Quotation Summary: Riverbank Bio-Engineering\nContractor: ${prov}\n📏 Scope: L = ${currentLength} m (${currentTiers} Tiers / Slope ${currentAngle}°)\n💰 Total Amount: ${total}\n💵 50% Deposit: ${document.getElementById('inst-1').innerText}\n(Powered by Riverbank Bio-HUD)`;
 
+      recordCurrentProjectEntry();
       navigator.clipboard.writeText(text).then(() => alert('📋 คัดลอกสรุปใบเสนอราคาเรียบร้อย!')).catch(() => prompt('คัดลอก:', text));
     }
 
@@ -1080,27 +1278,89 @@
       }
     }
 
-    function handlePrintAction() {
-      totalPrints++; totalProjects++; totalMetersProtected += currentLength;
-      recordMerit(); window.print();
+    function recordCurrentProjectEntry() {
+      const entry = {
+        time: new Date().toLocaleDateString('th-TH', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }),
+        contractor: document.getElementById('prov-name').value || 'ช่างนิรนาม',
+        project: document.getElementById('client-name').value || 'ตลิ่งนิเวศน์',
+        len: currentLength,
+        val: totalValueCreated
+      };
+      meritHistory.unshift(entry);
+      if (meritHistory.length > 8) meritHistory = meritHistory.slice(0, 8);
+      try { localStorage.setItem(MERIT_STORAGE_KEY, JSON.stringify(meritHistory)); } catch(e) {}
+      
+      totalProjects = meritHistory.length;
+      totalValueCreated = meritHistory.reduce((s, x) => s + (x.val || 0), 0);
+      totalMetersProtected = meritHistory.reduce((s, x) => s + (x.len || 0), 0);
+      renderMeritDashboard();
     }
 
-    function recordMerit() {
+    function handlePrintAction() {
+      totalPrints++;
+      recordCurrentProjectEntry();
+      window.print();
+    }
+
+    function renderMeritDashboard() {
       document.getElementById('merit-count').innerText = totalProjects;
       document.getElementById('merit-length').innerText = totalMetersProtected.toFixed(1);
       document.getElementById('merit-prints').innerText = totalPrints;
       document.getElementById('merit-money').innerText = totalValueCreated.toLocaleString() + ' ฿';
+
       drawMeritChart();
+      renderMeritLedgerTable();
     }
 
     function drawMeritChart() {
       const svg = document.getElementById('merit-chart');
-      let bars = '';
-      for (let i = 0; i < 10; i++) {
-        let h = 15 + Math.sin(i * 0.7) * 20 + (i * 4);
-        bars += `<rect x="${30 + (i * 45)}" y="${75 - h}" width="22" height="${h}" rx="3" fill="${i === 9 ? '#34d399' : '#0284c7'}" />`;
-      }
-      svg.innerHTML = bars;
+      const maxH = 80;
+      const count = Math.max(meritHistory.length, 1);
+      const colWidth = Math.min(45, (460 / count));
+
+      let maxVal = Math.max(...meritHistory.map(m => m.val || 0), 30000);
+      let els = `
+        <line x1="40" y1="85" x2="520" y2="85" stroke="#334155" stroke-width="1"/>
+        <line x1="40" y1="45" x2="520" y2="45" stroke="#1e293b" stroke-width="0.7" stroke-dasharray="4,4"/>
+        <text x="8" y="88" fill="#64748b" font-size="8" font-family="monospace">0 ฿</text>
+        <text x="8" y="48" fill="#64748b" font-size="8" font-family="monospace">${Math.round(maxVal/2000)}k</text>
+        <text x="8" y="16" fill="#64748b" font-size="8" font-family="monospace">${Math.round(maxVal/1000)}k</text>
+      `;
+
+      meritHistory.slice(0, 8).reverse().forEach((item, idx) => {
+        let x = 55 + (idx * (colWidth + 12));
+        let h = Math.max(12, ((item.val || 0) / maxVal) * maxH);
+        let y = 85 - h;
+        let isLatest = (idx === Math.min(meritHistory.length - 1, 7));
+
+        els += `
+          <rect x="${x}" y="${y}" width="${colWidth}" height="${h}" rx="3" 
+                fill="${isLatest ? 'var(--greed-accent)' : '#0284c7'}" fill-opacity="${isLatest ? '0.9' : '0.7'}"
+                stroke="${isLatest ? '#fff' : '#38bdf8'}" stroke-width="1"/>
+          <text x="${x + (colWidth/2)}" y="${y - 4}" fill="${isLatest ? 'var(--greed-accent)' : '#cbd5e1'}" 
+                font-size="7.5" font-weight="bold" font-family="monospace" text-anchor="middle">
+            ${Math.round(item.val / 1000)}k
+          </text>
+          <text x="${x + (colWidth/2)}" y="96" fill="#64748b" font-size="7" font-family="monospace" text-anchor="middle">
+            #${idx + 1}
+          </text>
+        `;
+      });
+
+      svg.innerHTML = els;
+    }
+
+    function renderMeritLedgerTable() {
+      const tbody = document.getElementById('merit-history-body');
+      tbody.innerHTML = meritHistory.map(m => `
+        <tr>
+          <td style="color:var(--text-muted);">${m.time}</td>
+          <td style="font-weight:700; color:#fff;">${m.contractor}</td>
+          <td>${m.project}</td>
+          <td style="text-align:right; color:var(--greed-accent); font-weight:700;">${m.len} m</td>
+          <td style="text-align:right; color:var(--accent-cyan); font-weight:700;">${(m.val || 0).toLocaleString()} ฿</td>
+        </tr>
+      `).join('');
     }
 
     /* ================= WIDE-ANGLE ARCHITECTURAL SIDE OBLIQUE PROJECTION ================= */
@@ -1111,7 +1371,6 @@
       const spanLenPx = 430;
       const rad = (currentAngle * Math.PI) / 180;
       const tierH = 13;
-      const tierD = Math.max(10, Math.min(26, tierH / Math.tan(rad)));
       const subBaseH = 15;
 
       let els = `
@@ -1152,12 +1411,10 @@
           <rect x="${x0 + xOff}" y="${yTop}" width="${spanLenPx}" height="${tierH}" rx="1" 
                 fill="#047857" stroke="#10b981" stroke-width="1.1"/>
         `;
-
         els += `
           <polygon points="${x0 + xOff},${yTop} ${x0 + xOff},${yBase} ${x0 + xOff - 12},${yBase - 8} ${x0 + xOff - 12},${yTop - 8}" 
                    fill="#065f46" stroke="#047857" stroke-width="0.8"/>
         `;
-
         els += `
           <polygon points="${x0 + xOff},${yTop} ${x0 + xOff + spanLenPx},${yTop} ${x0 + xOff + spanLenPx - 14},${yTop - 10} ${x0 + xOff - 14},${yTop - 10}" 
                    fill="#10b981" fill-opacity="0.32" stroke="#34d399" stroke-width="0.9"/>
@@ -1247,6 +1504,7 @@
       document.getElementById('lbl-tier').innerText = isTh ? 'ชั้น:' : 'Tiers:';
       document.getElementById('lbl-ang').innerText = isTh ? 'มุม:' : 'Slope:';
       document.getElementById('lbl-pile').innerText = isTh ? 'เสาเข็ม:' : 'Pile:';
+      document.getElementById('lbl-margin').innerText = isTh ? 'กำไร:' : 'Margin:';
       document.getElementById('tierDisplay').nextSibling.textContent = isTh ? ' ชั้น' : ' Tiers';
 
       document.getElementById('tab-quotation').innerText = isTh ? '1. ใบเสนอราคา' : '1. Quotation';
@@ -1278,8 +1536,8 @@
         ? '📐 ภาพสเก็ตช์สถาปัตยกรรมและเส้นนำสายตา (PERSPECTIVE SKETCH & CAD)'
         : '📐 ARCHITECTURAL PERSPECTIVE SKETCH & STRUCTURAL CAD';
       document.getElementById('p2-fig1').innerHTML = isTh
-        ? `1. ทัศนียภาพมุมกว้างแบบสเก็ตช์สถาปัตย์ (Wide-Angle Architectural Sketch - <span id="sketch-len-tag" style="color:var(--accent-emerald);">${currentLength}</span> ม.)`
-        : `1. Wide-Angle Perspective Sketch - Vanishing Projection (<span id="sketch-len-tag" style="color:var(--accent-emerald);">${currentLength}</span> m)`;
+        ? `1. ทัศนียภาพมุมกว้างแบบสเก็ตช์สถาปัตย์ (Wide-Angle Architectural Sketch - <span id="sketch-len-tag" style="color:var(--greed-accent);">${currentLength}</span> ม.)`
+        : `1. Wide-Angle Perspective Sketch - Vanishing Projection (<span id="sketch-len-tag" style="color:var(--greed-accent);">${currentLength}</span> m)`;
       document.getElementById('p2-sub1').innerText = isTh ? 'เส้นนำสายตา Vanishing Rays & Hand-Drawn Lines' : 'Vanishing Construction Rays & Drafting Overshoots';
       document.getElementById('p2-fig2').innerText = isTh ? '2. รูปตัดขวางเชิงวิศวกรรม (Cross Section Structural Hatching)' : '2. Parametric Cross Section Scale (Structural Hatching)';
       document.getElementById('cad-status-tag').innerText = isTh ? 'สโลปปลอดภัย' : 'OPTIMAL STABILITY';
@@ -1362,54 +1620,11 @@
         document.getElementById('lbl-sig-employer').innerText = 'Client Approval Signature';
         document.getElementById('lbl-date-employer').innerText = 'Date';
       }
-
-      if (isTh) {
-        document.getElementById('yantra-title').innerText = '📜 สาส์นแห่งสัมมาอาชีวะและโพธิปัญญา';
-        document.getElementById('yantra-sub').innerText = 'ปณิธานช่างวิศวกรรมดิน • ธรรมทานเพื่อแผ่นดินจากผู้สร้างไร้นาม';
-        document.getElementById('yantra-wake-quote').innerText = '"บุญเจ้าไม่เคยสร้าง ใครที่ไหนจะมาช่วยเจ้า? เครื่องมือเขาวางไว้ให้ถึงมือขนาดนี้แล้ว ลุกขึ้นมาสู้ ดิ้นรนสร้างตัวให้มันร่ำมันรวยสักที อย่ามัวแต่นั่งจมกองทุกข์รอวาสนา ตนเป็นที่พึ่งแห่งตนเท่านั้นที่จะพารอด"';
-        document.getElementById('yantra-body-text').innerHTML = `
-          <p><b>แด่เพื่อนร่วมทางผู้ลุกขึ้นสู้:</b></p>
-          <ul>
-            <li><b>ตั้งหลักได้เมื่อไหร่:</b> จงนำเงินทองจากหยาดเหงื่อไปสร้างสัมมาอาชีวะ เลี้ยงดูครอบครัวให้ร่มเย็น อย่าหลงระเริงไปในทางที่ผิดหรือมัวเมาในกิเลส</li>
-            <li><b>ไม่ต้องมาตอบแทนพวกเรา:</b> ทีมงานกบฏซอฟต์แวร์พอแล้วสำหรับลาภโลกีย์ ไม่ต้องการคำสรรเสริญหรือสิ่งตอบแทนใดๆ ทั้งสิ้น</li>
-            <li><b>จงไปช่วยผู้มีพระคุณ:</b> วันที่ท่านยืนได้ จงเดินไปหาคนที่เคยมีพระคุณและคนที่กำลังลำบาก ยื่นมือช่วยเขาเป็นคนแรกในวันที่เขาไร้หนทาง</li>
-            <li><b>ประคองจิตให้พ้นบ่วงสมมุติ:</b> เมื่อไม่อดอยากแล้ว จงหมั่นรักษาศีล ดำรงตนใน <b>พรหมวิหาร ๔</b> และ <b>กุศลกรรมบถ ๑๐</b> โลกนี้มีแต่เรื่องสมมุติ หมดลมหายใจเมื่อใด มีเพียง <b>"บุญและบาป"</b> เท่านั้นที่จะติดตามตัวไปทุกภพชาติ จนกว่าจะถึงฝั่งมรรคผลนิพพาน</li>
-          </ul>
-        `;
-        document.getElementById('yantra-dedication').innerHTML = `
-          <b>ปัตติทานมัย (น้อมถวายและอุทิศสายธารบุญกุศล):</b><br>
-          "อานิสงส์แห่งธรรมทานและหยาดเหงื่อในการสร้างสรรค์ปัญญานี้ ข้าพเจ้าและทีมงานไม่ขอรับไว้เป็นส่วนตน หากขอน้อมอุทิศบูชาคุณแด่ <b>พ่อแม่ผู้ให้กำเนิด พระในบ้าน พ่อแม่ครูบาอาจารย์</b> ตลอดจน <b>ทุกท่านที่เคยยื่นมือเข้ามาฉุดดึงช่วยเหลือในวันที่พวกเราตกต่ำและลำบากที่สุด</b><br>
-          หากไม่มีท่านทั้งหลาย ย่อมไม่มีข้าพเจ้า และย่อมไม่มีเครื่องมือนี้ส่งต่อถึงใคร บางท่านในวันนี้... เงินทองข้าวของที่เราพอจะหามาได้ก็คงตอบแทนท่านไม่ทัน เพราะท่านได้ละสังขารอำลาจากโลกนี้ไปเสียแล้ว ข้าพเจ้าจึงขออาศัยอำนาจแห่ง <b>'บุญบริสุทธิ์'</b> นี้ ติดตามดวงจิตของท่านไป ไม่ว่าท่านจะยังดำรงธาตุขันธ์อยู่บนโลกนี้ หรือละโลกไปสู่สุคติภูมิใดก็ตาม ขอให้ผลบุญแห่งปัญญาและการเกื้อกูลผู้คนนี้ จงส่งถึงท่านเพื่อเป็นเสบียงทิพย์ ปกปักรักษา และยังประโยชน์สุขสูงสุดแด่ทุกท่านตราบชั่วกาลนานเทอญ"
-        `;
-        document.getElementById('vermilion-chop').innerText = 'สัมมาอาชีวะ • ธรรมทาน';
-        document.getElementById('sig-merit-team').innerText = 'ช่างเบิร์ดโคตรเฟี้ยว & ทีมงานกบฏซอฟต์แวร์ผู้ผดุงธรรม';
-        document.getElementById('sig-merit-sub').innerText = '— ธรรมทานเพื่อแผ่นดิน —';
-      } else {
-        document.getElementById('yantra-title').innerText = 'THE SOVEREIGN CHARTER OF RIGHT LIVELIHOOD';
-        document.getElementById('yantra-sub').innerText = 'The Underground Artisan Manifesto • Transcendent Dhamma Gift';
-        document.getElementById('yantra-wake-quote').innerText = '"If thou hast never sown seeds of merit, who upon this earth shall come to thy salvation? The instruments of liberation are laid bare into thy hands. Rise, strive, and conquer thy fortune through honest labor. Linger not in despair—for self-reliance alone is the steadfast pillar of thy deliverance."';
-        document.getElementById('yantra-body-text').innerHTML = `
-          <p><b>Unto All Striving Brethren:</b></p>
-          <ul>
-            <li><b>Upon Attaining Prosperity:</b> Honor thy labor with integrity; nurture thy kin in peace. Squander not thy sweat in vice, vanity, or greed.</li>
-            <li><b>Seek Not to Repay Us:</b> The rebel software artisans seek neither worldly glory nor material recompense. We are fully content.</li>
-            <li><b>Honor Thy Benefactors First:</b> When thou standest tall, seek out those who once gave thee life, shelter, or solace, and those who suffer in silence. Be the first hand that lifts them from the mire.</li>
-            <li><b>Transcend All Worldly Illusions:</b> Being freed from famine, guard thy spirit through moral virtue. Dwell unshakeably in the <b>Four Immeasurables (Brahmavihāra)</b> and the <b>Ten Righteous Deeds</b>. All mundane titles are fleeting shadows; when the final breath departs, naught shall follow the soul across the veil save thy karma and thy virtue, until the eternal shore of Liberation (Nibbāna) is reached.</li>
-          </ul>
-        `;
-        document.getElementById('yantra-dedication').innerHTML = `
-          <b>Pattidāna-Maya (Dedication of Transcendent Merit):</b><br>
-          "The fruits of this free wisdom and honest sweat we claim not for ourselves. We solemnly dedicate this merit unto <b>the sacred parents who gave us breath, our living Buddhas at home, our venerable masters</b>, and <b>every kind soul who extended a hand when we were broken and destitute</b>.<br>
-          Without them, we would never have stood; without us, this instrument would never have touched the earth. For those whose physical forms have departed this realm before our worldly gratitude could reach them—may the purest light of this merit pierce across all planes of existence, serving as eternal celestial sustenance to guard and bless them throughout all eternity."
-        `;
-        document.getElementById('vermilion-chop').innerText = 'RIGHT LIVELIHOOD • DHAMMA';
-        document.getElementById('sig-merit-team').innerText = 'Bird The Master rebel & The Underground Software Guild';
-        document.getElementById('sig-merit-sub').innerText = '— Free Knowledge for Humanity —';
-      }
     }
 
     function renderAll() {
       const isTh = (currentLang === 'th');
+      applyGreedTheme(currentMargin);
       renderBilingualText();
 
       document.getElementById('lengthDisplay').innerText = currentLength;
@@ -1434,7 +1649,7 @@
 
       const tbody = document.getElementById('boq-tbody');
       tbody.innerHTML = '';
-      let grandTotal = 0;
+      let baseTotal = 0;
 
       baseItems.forEach(it => {
         let qty = 0, price = 0;
@@ -1452,7 +1667,7 @@
         }
 
         const total = Math.round(qty * price);
-        grandTotal += total;
+        baseTotal += total;
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -1464,11 +1679,31 @@
           <td style="text-align:right; font-weight:700; color:#fff;" class="font-num">${qty.toLocaleString()}</td>
           <td style="text-align:center; color:var(--text-muted); font-size:var(--font-micro);">${isTh ? it.unitTh : it.unitEn}</td>
           <td style="text-align:right; color:var(--text-muted);" class="font-num">${price.toLocaleString()}</td>
-          <td style="text-align:right; font-weight:700; color:var(--accent-emerald);" class="font-num">${total.toLocaleString()} ฿</td>
+          <td style="text-align:right; font-weight:700; color:var(--greed-accent);" class="font-num">${total.toLocaleString()} ฿</td>
         `;
         tbody.appendChild(tr);
       });
 
+      // บวกกำไรความโลภตามเปอร์เซ็นต์ (Dynamic Margin Addition)
+      const marginMoney = Math.round(baseTotal * (currentMargin / 100));
+      if (currentMargin > 0) {
+        const trMargin = document.createElement('tr');
+        trMargin.style.background = 'rgba(255,255,255,0.02)';
+        trMargin.innerHTML = `
+          <td style="text-align:center; color:var(--greed-accent);" class="font-num">4.1</td>
+          <td>
+            <div class="desc-th" style="color:var(--greed-accent);">${isTh ? `ส่วนเผื่อบริหารจัดการและผลตอบแทนวิศวกรรม (+${currentMargin}%)` : `Contractor Overhead & Engineering Margin (+${currentMargin}%)`}</div>
+            <div class="desc-en">${isTh ? 'ค่าบริหารความเสี่ยง กำไรผู้รับเหมา และภาษี' : 'Overhead, operational contingency & fair margin'}</div>
+          </td>
+          <td style="text-align:right; font-weight:700; color:#fff;" class="font-num">1</td>
+          <td style="text-align:center; color:var(--text-muted); font-size:var(--font-micro);">${isTh ? 'งาน' : 'lot'}</td>
+          <td style="text-align:right; color:var(--text-muted);" class="font-num">${marginMoney.toLocaleString()}</td>
+          <td style="text-align:right; font-weight:700; color:var(--greed-accent);" class="font-num">${marginMoney.toLocaleString()} ฿</td>
+        `;
+        tbody.appendChild(trMargin);
+      }
+
+      const grandTotal = baseTotal + marginMoney;
       totalValueCreated = grandTotal;
       const half = Math.round(grandTotal * 0.5);
       document.getElementById('inst-1').innerText = half.toLocaleString() + ' ฿';
@@ -1513,7 +1748,7 @@
         vatNote.innerText = isTh ? '*ราคารวมค่าแรง วัสดุ และเครื่องจักรแล้ว (ยืนยันราคาภายใน 30 วัน)' : '*Includes all labor, bio-materials, and machinery (Valid for 30 days)';
       }
 
-      recordMerit();
+      renderMeritDashboard();
     }
 
     loadSavedProviderInfo();
